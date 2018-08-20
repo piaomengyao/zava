@@ -15,5 +15,7 @@ public class InstantDemo {
         out.println(instant);
 
         out.println(Instant.now().get(ChronoField.MICRO_OF_SECOND));
+        //帮助你获取当前时刻的时间戳
+        out.println(Instant.now());
     }
 }
