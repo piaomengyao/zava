@@ -25,6 +25,18 @@ class DateTimeUtils {
     }
 
     /**
+     * 当前日期与给定日期的间隔天数
+     *
+     * @param yyyyMMdd 指定日期
+     * @return 间隔天数
+     */
+    static long intervalLocalDate(String yyyyMMdd) {
+        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+        LocalDate thatDay = LocalDate.parse(yyyyMMdd, formatter);
+        return intervalLocalDate(thatDay);
+    }
+
+    /**
      * 两个日期的间隔天数
      *
      * @param startDate 开始日期

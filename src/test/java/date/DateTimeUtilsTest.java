@@ -27,6 +27,7 @@ public class DateTimeUtilsTest {
     @Test
     public void intervalLocalDateTest() {
         System.out.println(DateTimeUtils.intervalLocalDate(thatDay));
+        System.out.println(DateTimeUtils.intervalLocalDate(thatDayStr));
         Assert.assertEquals(interval, DateTimeUtils.intervalLocalDate(thatDay, thisDay));
     }
 
