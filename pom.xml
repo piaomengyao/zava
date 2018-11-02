@@ -9,6 +9,30 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/abelzyp/zava/issues</url>
+    </issueManagement>
+    <inceptionYear>2018</inceptionYear>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>abelzyp</id>
+            <name>zhang yupeng</name>
+            <email>abelzyp@foxmail.com</email>
+        </developer>
+    </developers>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.com/abelzyp/zava</url>
+    </ciManagement>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
