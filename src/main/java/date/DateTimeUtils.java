@@ -38,7 +38,7 @@ class DateTimeUtils {
      */
     static Date parseYyyyMmDdToDate(String yyyyMmDd) throws ParseException {
         Objects.requireNonNull(yyyyMmDd);
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMmDd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         return format.parse(yyyyMmDd);
     }
 
