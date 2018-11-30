@@ -1,10 +1,17 @@
 package date;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 工具类
@@ -13,6 +20,36 @@ import java.util.Date;
  * @date 2018/10/23
  */
 class DateTimeUtils {
+
+    /**
+     * @param yyyyMmDd yyyyMmDd格式日期，例如20180808
+     * @return 转指定日期为LocalDate
+     */
+    static LocalDate parseYyyyMmDdToLocalDate(String yyyyMmDd) {
+        Objects.requireNonNull(yyyyMmDd, "yyyyMmDd");
+        DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+        return LocalDate.parse(yyyyMmDd, formatter);
+    }
+
+    /**
+     * @param yyyyMmDd yyyyMmDd格式日期，例如20180808
+     * @return 转换指定日期为Date格式
+     * @throws ParseException 类型转换异常
+     */
+    static Date parseYyyyMmDdToDate(String yyyyMmDd) throws ParseException {
+        Objects.requireNonNull(yyyyMmDd);
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMmDd");
+        return format.parse(yyyyMmDd);
+    }
+
+    /**
+     * @param localDate localDate
+     * @return 转换LocalDate为yyyyMMdd格式
+     */
+    static String parseLocalDateToYyyyMmDd(LocalDate localDate) {
+        Objects.requireNonNull(localDate);
+        return localDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+    }
 
     /**
      * 当前日期与给定日期的间隔天数
@@ -72,5 +109,24 @@ class DateTimeUtils {
         LocalDate startLocalDate = LocalDate.parse(startDate, formatter);
         LocalDate endLocalDate = LocalDate.parse(endDate, formatter);
         return intervalLocalDate(startLocalDate, endLocalDate);
+    }
+
+    /**
+     * @param startDate 开始日期,yyyyMMdd格式
+     * @param endDate   结束日期,yyyyMMdd格式
+     * @return 遍历开始日期和结束日期
+     */
+    static List<String> traversingTwoYyyyMmDd(String startDate, String endDate) {
+        LocalDate startLocalDate = parseYyyyMmDdToLocalDate(startDate);
+        LocalDate endLocalDate = parseYyyyMmDdToLocalDate(endDate);
+
+        long traverse = ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
+        if (traverse < 1) {
+            return new ArrayList<>();
+        }
+        return Stream.iterate(startLocalDate, d -> d.plusDays(1))
+                     .limit(traverse + 1)
+                     .map(DateTimeUtils::parseLocalDateToYyyyMmDd)
+                     .collect(Collectors.toList());
     }
 }

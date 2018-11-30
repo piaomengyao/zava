@@ -4,10 +4,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Abel
@@ -15,40 +16,49 @@ import java.util.Objects;
  */
 public class DateTimeUtilsTest {
 
-    private long interval = 363;
-    private LocalDate thatDay = LocalDate.of(1992, 3, 1);
-    private LocalDate thisDay = LocalDate.of(1993, 2, 27);
-    private Date thatDayDate = getDate("19920301", "yyyyMMdd");
-    private Date thisDayDate = getDate("19930227", "yyyyMMdd");
-    private String thatDayStr = "19920301";
-    private String thisDayStr = "19930227";
-    private String yyyyMMdd = "yyyyMMdd";
+    private long interval = 2551;
+    private LocalDate localDate1 = LocalDate.of(2008, 8, 8);
+    private LocalDate localDate2 = LocalDate.of(2015, 2, 2);
+    private Date date1 = DateTimeUtils.parseYyyyMmDdToDate("20080808");
+    private Date date2 = DateTimeUtils.parseYyyyMmDdToDate("20150202");
+    private String yyyyMmDd1 = "20080808";
+    private String yyyyMmDd2 = "20150202";
+
+    public DateTimeUtilsTest() throws ParseException {
+    }
+
+    @Test
+    public void parseYyyyMmDdToLocalDateTest() {
+        System.out.println(DateTimeUtils.parseYyyyMmDdToLocalDate(yyyyMmDd1));
+    }
+
+    @Test
+    public void parseLocalDateToYyyyMmDdTest() {
+        Assert.assertEquals(yyyyMmDd1, DateTimeUtils.parseLocalDateToYyyyMmDd(localDate1));
+    }
 
     @Test
     public void intervalLocalDateTest() {
-        System.out.println(DateTimeUtils.intervalLocalDate(thatDay));
-        System.out.println(DateTimeUtils.intervalLocalDate(thatDayStr));
-        Assert.assertEquals(interval, DateTimeUtils.intervalLocalDate(thatDay, thisDay));
+        System.out.println(DateTimeUtils.intervalLocalDate(localDate1));
+        System.out.println(DateTimeUtils.intervalLocalDate(yyyyMmDd1));
+        Assert.assertEquals(interval, DateTimeUtils.intervalLocalDate(localDate1, localDate2));
     }
 
     @Test
     public void intervalDateTest() {
-        Assert.assertEquals(interval, DateTimeUtils.intervalDate(thatDayDate, thisDayDate));
+        Assert.assertEquals(interval, DateTimeUtils.intervalDate(date1, date2));
     }
 
     @Test
     public void intervalYyyyMmDdTest() {
-        Assert.assertEquals(interval, DateTimeUtils.intervalYyyyMmDd(thatDayStr, thisDayStr));
+        Assert.assertEquals(interval, DateTimeUtils.intervalYyyyMmDd(yyyyMmDd1, yyyyMmDd2));
     }
 
-    private Date getDate(String date, String pattern) {
-        Objects.requireNonNull(date);
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        try {
-            return format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
+    @Test
+    public void traversingTwoYyyyMmDdTest() {
+        List<String> traversingList = DateTimeUtils.traversingTwoYyyyMmDd(yyyyMmDd1, yyyyMmDd2);
+        Optional.ofNullable(traversingList)
+                .orElseGet(ArrayList::new)
+                .forEach(System.out::println);
     }
 }
