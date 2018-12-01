@@ -114,7 +114,7 @@ class DateTimeUtils {
     /**
      * @param startDate 开始日期,yyyyMMdd格式
      * @param endDate   结束日期,yyyyMMdd格式
-     * @return 遍历开始日期和结束日期
+     * @return 遍历开始日期和结束日期, 包含开始日期和结束日期
      */
     static List<String> traversingTwoYyyyMmDd(String startDate, String endDate) {
         LocalDate startLocalDate = parseYyyyMmDdToLocalDate(startDate);
@@ -125,6 +125,7 @@ class DateTimeUtils {
             return new ArrayList<>();
         }
         return Stream.iterate(startLocalDate, d -> d.plusDays(1))
+                     //这里可以调整是否包含结束日期
                      .limit(traverse + 1)
                      .map(DateTimeUtils::parseLocalDateToYyyyMmDd)
                      .collect(Collectors.toList());
